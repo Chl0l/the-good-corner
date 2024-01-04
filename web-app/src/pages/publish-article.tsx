@@ -7,7 +7,7 @@ import {
 } from "@/components/FormElements/Input/Input";
 import Loader from "@/components/Loader/Loader";
 import { MainContentTitle } from "@/components/MainContentTitle/MainContentTitle";
-import { PageContainer } from "@/components/PageContainer/PageContainer";
+import { NarrowPageContainer } from "@/components/PageContainer/PageContainer";
 import {
   CreateAdFormMutation,
   CreateAdFormMutationVariables,
@@ -59,28 +59,26 @@ export default function PublishArticlePage() {
   >(CREATE_AD_FORM);
 
   const createArticle = async () => {
-    try {
-      const { data } = await createAdMutation({
-        variables: {
-          title: formData.title,
-          price: formData.price as number,
-          categoryId: formData.categoryId,
-          description: formData.description,
-          owner: formData.owner,
-        },
-      });
+    const { data } = await createAdMutation({
+      variables: {
+        title: formData.title,
+        price: formData.price as number,
+        categoryId: formData.categoryId,
+        description: formData.description,
+        owner: formData.owner,
+      },
+    });
 
-      // requête POST au service file-hosting avec le fichier provenant de l'état
-      // bonus : compresser l'image et la transformer en jpeg avant de l'envoyer
+    // requête POST au service file-hosting avec le fichier provenant de l'état
+    // bonus : compresser l'image et la transformer en jpeg avant de l'envoyer
 
-      if (data && data.createAd.id) {
-        router.push(`/articles/${data.createAd.id}?publishConfirmation=true`);
-      }
-    } catch (error) {}
+    if (data && data.createAd.id) {
+      router.push(`/articles/${data.createAd.id}?publishConfirmation=true`);
+    }
   };
 
   return (
-    <PageContainer>
+    <NarrowPageContainer>
       <MainContentTitle>Publier une annonce</MainContentTitle>
       <Form
         onSubmit={(event) => {
@@ -149,6 +147,6 @@ export default function PublishArticlePage() {
         </PrimaryButton>
         {error && error.message}
       </Form>
-    </PageContainer>
+    </NarrowPageContainer>
   );
 }
