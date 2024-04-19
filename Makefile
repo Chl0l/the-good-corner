@@ -2,8 +2,14 @@ run-dev:
 	docker compose build
 	docker compose watch
 
-logs:
+logs-dev:
 	docker compose logs -f
+
+run-prod:
+	docker compose -f docker-compose.prod.yml up --build --detach
+
+logs-prod:
+	docker compose -f docker-compose.prod.yml logs -f
 
 back-end-test-watch:
 	docker compose exec back-end npm run test:watch
